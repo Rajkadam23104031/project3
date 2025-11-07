@@ -37,7 +37,7 @@ from dotenv import load_dotenv
 
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name_, template_folder='.', static_folder='.'_)
 app.secret_key = 'your-secret-key-change-in-production'
 app.config['DATABASE'] = 'interview.db'
 app.config['PREFERRED_URL_SCHEME'] = 'https'
@@ -1393,4 +1393,5 @@ def extract_text_from_resume(file_path):
 init_db()
 
 if __name__ == "__main__":
+
     app.run(debug=True, ssl_context=('cert.pem', 'key.pem'), host='127.0.0.1', port=5000)
