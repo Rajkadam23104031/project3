@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+  .result-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  h2 {
+    color: #333;
+  }
+  .feedback {
+    text-align: left;
+    margin-top: 20px;
+  }
+  .feedback p {
+    margin-bottom: 8px;
+  }
+  .btn-next {
+    margin-top: 20px;
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+  }
+  .btn-next:hover {
+    background: #218838;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="result-container">
+  <h2>{{ msg }}</h2>
+  <p><strong>Average Score:</strong> {{ score }}/10</p>
+
+  {% if results %}
+  <div class="feedback">
+    <h4>Detailed Feedback:</h4>
+    {% for r in results %}
+      <p>Q{{ loop.index }} → Score: {{ r.score }}/10 — {{ r.feedback }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if next_round %}
+    <a href="{{ url_for('round2') }}" class="btn-next">Proceed to Round 2 🚀</a>
+  {% else %}
+    <a href="{{ url_for('round1') }}" class="btn-next" style="background:#dc3545;">Try Again 🔁</a>
+  {% endif %}
+</div>
+{% endblock %}

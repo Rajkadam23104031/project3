@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+  /* ✅ General styling */
+  body {
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .coding-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    overflow-x: auto;
+  }
+
+  h2 {
+    text-align: center;
+    color: #1e3a8a;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  pre {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+    overflow-x: auto;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    resize: vertical;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    background: #fff;
+    transition: 0.2s;
+  }
+
+  textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 5px rgba(59,130,246,0.3);
+    outline: none;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 15px;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 600px) {
+    .coding-container {
+      padding: 18px;
+      border-radius: 14px;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    textarea {
+      font-size: 0.9rem;
+    }
+    button {
+      font-size: 1rem;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="coding-container">
+  <h2>💻 Round 2 — Coding Logic</h2>
+<pre>{{ question }}</pre>
+
+<form method="POST" action="{{ url_for('submit_round2') }}">
+  <label for="language">Choose Programming Language:</label>
+  <select name="language" id="language" required>
+    <option value="python" selected>Python</option>
+    <option value="java">Java</option>
+    <option value="cpp">C++</option>
+    <option value="javascript">JavaScript</option>
+    <!-- add more if needed -->
+  </select>
+  <br><br>
+  <textarea name="user_code" rows="12" placeholder="Write your solution here..." required></textarea><br>
+  <button type="submit">Submit Code</button>
+</form>
+
+</div>
+{% endblock %}

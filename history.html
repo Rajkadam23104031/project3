@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <h2><i class="fas fa-history"></i> Your Interview History</h2>
+
+    <!-- Delete All Button -->
+    <form action="{{ url_for('delete_all_history') }}" method="POST" style="margin-bottom:20px;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all history?');">
+            <i class="fas fa-trash"></i> Delete All History
+        </button>
+    </form>
+
+    <!-- Wrap table in a scrollable div -->
+    <div class="table-wrapper">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Difficulty</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Feedback</th>
+                    <th>Score</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in responses %}
+                <tr>
+                    <td>{{ r['created_at'] }}</td>
+                    <td>{{ r['interview_type'].title() }}</td>
+                    <td>{{ r['difficulty'].title() }}</td>
+                    <td>{{ r['question'] }}</td>
+                    <td>{{ r['answer'] }}</td>
+                    <td>{{ r['feedback'] }}</td>
+                    <td>{{ "%.1f"|format(r['score']) }}</td>
+                    <td>
+                        {% if r['id'] is defined %}
+                        <form action="{{ url_for('delete_response', response_id=r['id']) }}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this response?');">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+
+    <div class="table-wrapper">  <!-- Add this wrapper here -->
+
+        {% for round_name, leaders in leaderboards.items() %}
+        <h3 style="margin-top: 30px;">{{ round_name }} Round</h3>
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Average Score</th>
+                    <th>Responses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in leaders %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ entry['name'] }}</td>
+                    <td>{{ "%.1f"|format(entry['avg_score']) }}</td>
+                    <td>{{ entry['interviews_count'] }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+
+    </div>  <!-- Close wrapper -->
+
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+
+    <a href="{{ url_for('dashboard') }}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="result-header">
+        <h2><i class="fas fa-chart-line"></i> Interview Results</h2>
+        <div class="interview-meta">
+            <span class="meta-badge">
+                <i class="fas fa-briefcase"></i> {{ interview.interview_type.title() }}
+            </span>
+            <span class="meta-badge">
+                <i class="fas fa-signal"></i> {{ interview.difficulty.title() }}
+            </span>
+            <span class="meta-badge">
+                <i class="fas fa-calendar"></i> {{ interview.created_at }}
+            </span>
+            <span class="meta-badge">
+                <i class="fas fa-question-circle"></i> {{ responses|length }} Questions
+            </span>
+        </div>
+    </div>
+
+    {% if responses %}
+        {% for response in responses %}
+        <div class="response-card">
+            <div class="response-number">{{ loop.index }}</div>
+
+            <div class="question-section">
+                <div class="question-label">
+                    <i class="fas fa-question-circle"></i> Question
+                </div>
+                <div class="question-text">{{ response.question }}</div>
+            </div>
+
+            <div class="answer-section">
+                <div class="answer-label">
+                    <i class="fas fa-comment"></i> Your Answer
+                </div>
+                <div class="answer-text">{{ response.answer }}</div>
+            </div>
+
+            <div class="feedback-section">
+                <div class="feedback-label">
+                    <i class="fas fa-lightbulb"></i> AI Feedback
+                </div>
+                <div class="feedback-text">{{ response.feedback }}</div>
+
+                {% set score = response.score %}
+                {% if score >= 8 %}
+                    <span class="score-badge score-excellent">
+                        <i class="fas fa-star"></i> Score: {{ "%.1f"|format(score) }}/10
+                    </span>
+                {% elif score >= 6 %}
+                    <span class="score-badge score-good">
+                        <i class="fas fa-check-circle"></i> Score: {{ "%.1f"|format(score) }}/10
+                    </span>
+                {% elif score >= 4 %}
+                    <span class="score-badge score-average">
+                        <i class="fas fa-minus-circle"></i> Score: {{ "%.1f"|format(score) }}/10
+                    </span>
+                {% else %}
+                    <span class="score-badge score-poor">
+                        <i class="fas fa-times-circle"></i> Score: {{ "%.1f"|format(score) }}/10
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <p>No responses found for this interview.</p>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

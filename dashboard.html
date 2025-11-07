@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header" style="display: flex; align-items: center; gap: 10px;">
+        {% if profile_photo %}
+            <a href="{{ url_for('profile') }}" title="View Profile">
+            <img src="{{ url_for('static', filename=profile_photo) }}" alt="Profile Photo" style="width: 40px; height: 40px; border-radius: 50%;">
+        {% else %}
+            <a href="{{ url_for('profile') }}" title="View Profile">
+                <img src="{{ url_for('static', filename='RajKadam_2310.jpg') }}" alt="Default Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+            </a>
+        {% endif %}
+        <h2 class="card-title">Welcome, {{ user_name }}!</h2>
+        <a href="{{ url_for('choose_type') }}" class="btn btn-primary" style="margin-left:auto;">
+            <i class="fas fa-plus"></i> New Interview
+        </a>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-label">Total Practices</div>
+            <div class="stat-value">{{ interview_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Average Score</div>
+            <div class="stat-value">{{ avg_score }}/10</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Improvement</div>
+            <div class="stat-value">
+                {% if improvement > 0 %}
+                    +{{ improvement }}%
+                {% elif improvement < 0 %}
+                    {{ improvement }}%
+                {% else %}
+                    0%
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="content-area">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Interview Sessions</h2>
+            </div>
+
+            {% if recent_interviews and recent_interviews|length > 0 %}
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    {% for interview in recent_interviews[:5] %}
+                        <div style="padding: 15px; border: 1px solid #e9ecef; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h3>{{ interview.interview_type.title() }} Interview</h3>
+                                    <span class="difficulty-badge {{ interview.difficulty }}">
+                                        {{ interview.difficulty.title() }}
+                                    </span>
+                                    <p style="color: #6c757d; margin-top: 5px;">
+                                        {{ interview.created_at }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <a href="{{ url_for('result_detail', interview_id=interview.id) }}" class="btn btn-outline-primary btn-sm">
+                                        View Result
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>You haven't completed any interviews yet. <a href="{{ url_for('choose_type') }}">Start your first one!</a></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="card sidebar-card">
+            <div class="card-header">
+                <h2 class="card-title">Interview Tips</h2>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-title">
+                    <i class="fas fa-lightbulb"></i> Use the STAR Method
+                </div>
+                <p>Situation, Task, Action, Result - structure your answers with this framework for maximum impact.</p>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-title">
+                    <i class="fas fa-chart-bar"></i> Include Metrics
+                </div>
+                <p>Quantify your achievements with numbers and percentages to make your answers more compelling.</p>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-title">
+                    <i class="fas fa-clock"></i> Be Concise
+                </div>
+                <p>Aim for answers that are 1-2 minutes long. Practice being clear and to the point.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

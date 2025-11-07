@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <h2 style="text-align:center; margin-bottom: 20px; color: var(--primary);">Edit Your Profile</h2>
+    <form method="POST" enctype="multipart/form-data" class="auth-form">
+        <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" value="{{ user.full_name or '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="bio">bio</label>
+            <input type="text" id="bio" name="bio" value="{{ user.bio or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="profile_photo">Profile Photo</label>
+            <input type="file" id="profile_photo" name="profile_photo" accept="image/*">
+            {% if user.profile_photo_path %}
+                <img src="{{ url_for('static', filename=user.profile_photo_path) }}" alt="Profile Photo"
+                     style="width: 100px; height: 100px; border-radius: 50%; margin-top: 10px; object-fit: cover;">
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+{% endblock %}

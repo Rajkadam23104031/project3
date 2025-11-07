@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+  /* Common container */
+  .interview-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    overflow-x: auto; /* horizontal scroll for small screens */
+  }
+
+  h2 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+  }
+
+  .question-block {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e5e7eb;
+  }
+
+  .question-block p {
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    padding: 12px;
+    resize: vertical;
+    font-size: 0.95rem;
+    transition: 0.2s;
+    background: #fff;
+  }
+
+  textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 5px rgba(59,130,246,0.3);
+    outline: none;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    transform: scale(1.02);
+  }
+
+  /* Mobile optimization */
+  @media (max-width: 600px) {
+    .interview-container {
+      padding: 18px;
+      border-radius: 14px;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+    textarea {
+      font-size: 0.9rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="interview-container">
+  <h2>🎤 Round 3 — HR & Communication Interview</h2>
+  <p class="subtitle">Answer these questions honestly and confidently.</p>
+
+  <form method="POST" action="{{ url_for('submit_round3') }}">
+    {% for q in questions %}
+      <div class="question-block">
+        <p>Q{{ loop.index }}. {{ q.question }}</p>
+        <textarea name="q{{ loop.index0 }}" rows="4" placeholder="Write your answer here..." required></textarea>
+      </div>
+    {% endfor %}
+
+    <button type="submit">Submit Answers</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+<h2>🧠 Round 1 — Aptitude & Tech Quiz</h2>
+<form method="POST" action="/submit_round1">
+  {% for q in questions %}
+    <div class="question">
+      <p><b>Q{{ loop.index }}. {{ q.question }}</b></p>
+      {% for opt in q.options %}
+        <label><input type="radio" name="q{{ loop.index0 }}" value="{{ opt }}"> {{ opt }}</label><br>
+      {% endfor %}
+    </div>
+    <hr>
+  {% endfor %}
+  <button type="submit">Submit</button>
+</form>
