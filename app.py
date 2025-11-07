@@ -39,7 +39,11 @@ from dotenv import load_dotenv
 # Initialize Flask app
 app = Flask(__name__, template_folder='.', static_folder='.')
 app.secret_key = 'your-secret-key-change-in-production'
-app.config['DATABASE'] = 'interview.db'app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+# ✅ FIXED: Keep these on separate lines
+app.config['DATABASE'] = 'interview.db'
+app.config['PREFERRED_URL_SCHEME'] = 'https'
+
 app.config['SESSION_COOKIE_SECURE'] = True
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
@@ -1394,6 +1398,7 @@ init_db()
 if __name__ == "__main__":
 
     app.run(debug=True, ssl_context=('cert.pem', 'key.pem'), host='127.0.0.1', port=5000)
+
 
 
 
